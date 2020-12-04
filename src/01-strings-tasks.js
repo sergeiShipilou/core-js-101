@@ -1,8 +1,8 @@
 /* *******************************************************************************************
- *                                                                                           *
- * Plese read the following tutorial before implementing tasks:                              *
+ *                                               *
+ * Plese read the following tutorial before implementing tasks:                  *
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String   *
- *                                                                                           *
+ *                                               *
  ******************************************************************************************* */
 
 
@@ -94,7 +94,7 @@ function getFirstChar(value) {
  *
  * @example
  *   '  Abracadabra'    => 'Abracadabra'
- *   'cat'              => 'cat'
+ *   'cat'          => 'cat'
  *   '\tHello, World! ' => 'Hello, World!'
  */
 function removeLeadingAndTrailingWhitespaces(value) {
@@ -178,8 +178,8 @@ function convertToUpperCase(str) {
  *   ],
  *   'info@gmail.com' => ['info@gmail.com']
  */
-function extractEmails(/* str */) {
-  throw new Error('Not implemented');
+function extractEmails(str) {
+  return str.split(';');
 }
 
 /**
@@ -192,23 +192,34 @@ function extractEmails(/* str */) {
  *
  * @example
  *
- *            '┌────┐\n'+
+ *        '┌────┐\n'+
  *  (6,4) =>  '│    │\n'+
- *            '│    │\n'+
- *            '└────┘\n'
+ *        '│    │\n'+
+ *        '└────┘\n'
  *
  *  (2,2) =>  '┌┐\n'+
- *            '└┘\n'
+ *        '└┘\n'
  *
- *             '┌──────────┐\n'+
- *  (12,3) =>  '│          │\n'+
- *             '└──────────┘\n'
+ *         '┌──────────┐\n'+
+ *  (12,3) =>  '│      │\n'+
+ *         '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
-}
+function getRectangleString(width, height) {
+  let rectangle = '';
+  const build = width - 2;
 
+  for (let i = 0; i < height; i += 1) {
+    if (i === 0) {
+      rectangle += `┌${'─'.repeat(build)}┐\n`;
+    } else if (i === height - 1) {
+      rectangle += `└${'─'.repeat(build)}┘\n`;
+    } else {
+      rectangle += `│${' '.repeat(build)}│\n`;
+    }
+  }
+  return rectangle;
+}
 
 /**
  * Encode specified string with ROT13 cipher
@@ -226,8 +237,19 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  let result = '';
+  for (let i = 0; i < str.length; i += 1) {
+    const charCode = str.charCodeAt(i);
+    if ((charCode >= 65 && charCode <= 77) || (charCode >= 97 && charCode <= 109)) {
+      result += String.fromCharCode(charCode + 13);
+    } else if ((charCode >= 78 && charCode <= 91) || (charCode >= 110 && charCode <= 122)) {
+      result += String.fromCharCode(charCode - 13);
+    } else {
+      result += String.fromCharCode(charCode);
+    }
+  }
+  return result;
 }
 
 /**
@@ -243,10 +265,12 @@ function encodeToRot13(/* str */) {
  *   isString('test') => true
  *   isString(new String('test')) => true
  */
-function isString(/* value */) {
-  throw new Error('Not implemented');
+function isString(value) {
+  if (typeof value === 'string' || value instanceof String) {
+    return true;
+  }
+  return false;
 }
-
 
 /**
  * Returns playid card id.
@@ -272,10 +296,16 @@ function isString(/* value */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
-}
+const pack = [
+  'A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣',
+  'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦',
+  'A♥', '2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥',
+  'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠',
+];
 
+function getCardId(value) {
+  return pack.indexOf(value);
+}
 
 module.exports = {
   concatenateStrings,
