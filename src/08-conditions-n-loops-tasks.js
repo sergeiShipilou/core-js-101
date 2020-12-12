@@ -377,8 +377,18 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/webalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const n = pathes.length;
+  const link = pathes[0];
+  let result = '';
+  let pathLink = '';
+  for (let i = 0; i < link.length; i += 1) {
+    if (link[i] === '/') pathLink = link.slice(0, i + 1);
+    // eslint-disable-next-line no-loop-func
+    const array = pathes.filter((item) => item.indexOf(pathLink) === 0);
+    if (array.length === n) result = pathLink;
+  }
+  return result;
 }
 
 
@@ -400,8 +410,20 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const matrix = [];
+  for (let i = 0; i < m1.length; i += 1) {
+    const row = [];
+    for (let j = 0; j < m2[0].length; j += 1) {
+      let sum = 0;
+      for (let k = 0; k < m2.length; k += 1) {
+        sum += m1[i][k] * m2[k][j];
+      }
+      row.push(sum);
+    }
+    matrix.push(row);
+  }
+  return matrix;
 }
 
 
@@ -435,8 +457,35 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(pos) {
+  if (pos[0][0] === pos[0][1] && pos[0][1] === pos[0][2]) {
+    if (pos[0][0] !== undefined) return pos[0][0];
+  }
+  if (pos[1][0] === pos[1][1] && pos[1][1] === pos[1][2]) {
+    if (pos[1][0] !== undefined) return pos[1][0];
+  }
+  if (pos[2][0] === pos[2][1] && pos[2][1] === pos[2][2]) {
+    if (pos[2][0] !== undefined) return pos[2][0];
+  }
+  if (pos[0][0] === pos[1][0] && pos[1][0] === pos[2][0]) {
+    if (pos[0][0] !== undefined) return pos[0][0];
+  }
+  if (pos[0][0] === pos[1][0] && pos[1][0] === pos[2][0]) {
+    if (pos[0][0] !== undefined) return pos[0][0];
+  }
+  if (pos[0][1] === pos[1][1] && pos[1][1] === pos[2][1]) {
+    if (pos[0][1] !== undefined) return pos[0][1];
+  }
+  if (pos[0][2] === pos[1][2] && pos[1][2] === pos[2][2]) {
+    if (pos[0][2] !== undefined) return pos[0][2];
+  }
+  if (pos[0][0] === pos[1][1] && pos[1][1] === pos[2][2]) {
+    if (pos[0][0] !== undefined) return pos[0][0];
+  }
+  if (pos[0][2] === pos[1][1] && pos[1][1] === pos[2][0]) {
+    if (pos[0][2] !== undefined) return pos[0][2];
+  }
+  return undefined;
 }
 
 
